@@ -1,6 +1,6 @@
 # Stage 1: Base build stage
 FROM python:3.13-slim AS builder
- 
+
 # Create the app directory
 RUN mkdir /app
  
@@ -41,11 +41,17 @@ COPY --chown=appuser:appuser . .
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1 
 
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
 # Switch to non-root user
 USER appuser
- 
+
+
+
 # Expose the application port
-EXPOSE 8000 
- 
+EXPOSE 8000
+
 # Start the application using Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "devskills.wsgi:application"]
+#CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "devskills.wsgi:application"]
+CMD ["/start.sh"]
