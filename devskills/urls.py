@@ -23,4 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 
+# Apparently not supposed to do this in production, so set up nginx instead
 urlpatterns += staticfiles_urlpatterns()
