@@ -43,11 +43,10 @@ ENV PYTHONUNBUFFERED=1
 
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
+RUN ls -l
 
 # Switch to non-root user
 USER appuser
-
-
 
 # Expose the application port
 EXPOSE 8000
@@ -55,3 +54,5 @@ EXPOSE 8000
 # Start the application using Gunicorn
 #CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "devskills.wsgi:application"]
 CMD ["/start.sh"]
+# RUN sed -i 's/\r$//' $app/start.sh  && chmod +x $app/start.sh
+# ENTRYPOINT $app/start.sh
