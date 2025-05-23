@@ -1,6 +1,8 @@
 from .base import *
 
 ALLOWED_HOSTS = ['*']
+SECRET_KEY='your_secret_key'
+DEBUG = True
 
 DATABASES = {
     'default': {
