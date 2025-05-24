@@ -1,0 +1,27 @@
+<div id="skills-list">
+    {% if skills %}
+        <div class=overflow-x-auto>
+            <table class="table table-zebra table-pin-rows">
+                <thead>
+                    <tr>
+                        <th>Skill</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for skill in skills %}
+                        <tr>
+                            <td>{{ skill.name }}</td>
+                            <td>{{ skill.category }}</td>
+                            <td>
+                                <button class="btn btn-xs btn-error">Delete</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    {% endif %}
+</div>    

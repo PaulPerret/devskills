@@ -1,5 +1,11 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def index(request):
-    context = {}
+    
+    # Fetch all the skills associated with the logged-in user
+    my_skills = request.user.employee.skills.all()
+    
+    context = {'skills': my_skills}
     return render(request, 'employee.html', context)
