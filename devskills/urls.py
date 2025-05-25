@@ -24,5 +24,3 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 
-# Old way of doing static files. Added whitenoise instead.
-#urlpatterns += staticfiles_urlpatterns()

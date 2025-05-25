@@ -1,22 +1,21 @@
 <div id="skills-list">
     {% if skills %}
-        <div class=overflow-x-auto>
-            <table class="table table-zebra table-pin-rows">
-                <thead>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left rtl:text-right">
+                <thead class="text-xs uppercase">
                     <tr>
-                        <th>Skill</th>
-                        <th>Category</th>
+                        <th scope="col" class="px-6 py-3">Skill</th>
+                        <th scope="col" class="px-6 py-3">Category</th>
                     </tr>
                 </thead>
-
                 <tbody>
                     {% for skill in skills %}
-                        <tr>
-                            <td>{{ skill.name }}</td>
-                            <td>{{ skill.category }}</td>
-                            <td>
+                        <tr class="bg-white border-b">
+                            <td scope="col" class="px-6 py-3">{{ skill.name }}</td>
+                            <td scope="col" class="px-6 py-3">{{ skill.category }}</td>
+                            {% comment %} <td>
                                 <button class="btn btn-xs btn-error">Delete</button>
-                            </td>
+                            </td> {% endcomment %}
                         </tr>
                     {% endfor %}
                 </tbody>
