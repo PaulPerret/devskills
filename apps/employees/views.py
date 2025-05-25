@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
 from employees.models import Employee
+from skills.models import Skill
 
 @login_required
 def index(request):
@@ -16,5 +17,9 @@ def index(request):
 def find_an_expert(request):
     
     employees_list = Employee.objects.all()
-    context = {'employees': employees_list}
+    skills_list = Skill.objects.all()
+    context = {
+        'employees': employees_list,
+        'skills': skills_list
+        }
     return render(request, 'search.html', context)
