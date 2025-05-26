@@ -9,7 +9,7 @@
     {% else %}
     <p>No employees are available.</p>
     {% endif %}
-
+    
     {% if skills %}
     Skills:
     <ul>
@@ -20,5 +20,79 @@
     {% else %}
     <p>No skills are available.</p>
     {% endif %}
+    
+    <label for="categorySelect">Category:</label>
+    <select id="categorySelect">
+        {% for category in categories %}
+        <option value="{{ category.name }}">{{ category.name }}</option>
+        {% endfor %}
+    </select>
+    
+    <label for="skillSelect">Skill:</label>
+    <select id="skillSelect">
+        <option value="">-- Select a Skill --</option>
+        {% for skill in skills %}
+        <option value="{{skill.name}}">
+            {{skill.name}}
+        </option>
+        {% endfor %}
+    </select>
+    
+    
+    <script>
+        var skillsObject = {
+            {% for category in categories %}
+            "{{category.name}}": [
+                {% for skill in skills %}
+                    {% if skill.category.name == category.name%}
+                    "{{ skill.name }}"{% if not forloop.last %},{% endif %}
+                    {% endif %}
+                {% endfor %}
+            ]{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        }
         
+    </script>
+    
+    {% comment %} var subjectObject = {
+    "Front-end": {
+    "HTML": ["Links", "Images", "Tables", "Lists"],
+    "CSS": ["Borders", "Margins", "Backgrounds", "Float"],
+    "JavaScript": ["Variables", "Operators", "Functions", "Conditions"]
+    },
+    "Back-end": {
+    "PHP": ["Variables", "Strings", "Arrays"],
+    "SQL": ["SELECT", "UPDATE", "DELETE"]
+    }
+    } {% endcomment %}
+    
+    <!-- Embed skill data as JavaScript array -->
+    <!--
+    <script>
+    const skills = [
+    {% for skill in skills %}
+    {
+    name: "{{ skill.name|escapejs }}",
+    category: "{{ skill.category.name|escapejs }}"
+    }{% if not forloop.last %},{% endif %}
+    {% endfor %}
+    ];
+    
+    const categorySelect = document.getElementById('categorySelect');
+    const skillSelect = document.getElementById('skillSelect');
+    
+    categorySelect.addEventListener('change', function () {
+    const selectedCategory = this.value;
+    skillSelect.innerHTML = '<option value="">-- Select a Skill --</option>';
+    
+    const filteredSkills = skills.filter(s => s.category === selectedCategory);
+    filteredSkills.forEach(skill => {
+    const opt = document.createElement('option');
+    opt.value = skill.name;
+    opt.textContent = skill.name;
+    skillSelect.appendChild(opt);
+    });
+    });
+    </script>
+    -->
 </div>
