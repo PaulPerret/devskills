@@ -20,79 +20,43 @@
     {% else %}
     <p>No skills are available.</p>
     {% endif %}
-    
-    <label for="categorySelect">Category:</label>
-    <select id="categorySelect">
-        {% for category in categories %}
-        <option value="{{ category.name }}">{{ category.name }}</option>
-        {% endfor %}
-    </select>
-    
-    <label for="skillSelect">Skill:</label>
-    <select id="skillSelect">
-        <option value="">-- Select a Skill --</option>
-        {% for skill in skills %}
-        <option value="{{skill.name}}">
-            {{skill.name}}
-        </option>
-        {% endfor %}
-    </select>
+
     
     
     <script>
         var skillsObject = {
             {% for category in categories %}
             "{{category.name}}": [
-                {% for skill in skills %}
-                    {% if skill.category.name == category.name%}
-                    "{{ skill.name }}"{% if not forloop.last %},{% endif %}
-                    {% endif %}
-                {% endfor %}
+            {% for skill in skills %}{% if skill.category.name == category.name%}
+            "{{ skill.name }}"{% if not forloop.last %},{% endif %}
+            {% endif %}
+            {% endfor %}
             ]{% if not forloop.last %},{% endif %}
             {% endfor %}
         }
         
+        window.onload = function() {
+            var categorySelect = document.getElementById("category");
+            var skillSelect = document.getElementById("skill");
+            for (var x in skillsObject) {
+                categorySelect.options[categorySelect.options.length] = new Option(x, x);
+            }
+            categorySelect.onchange = function() {
+                // When Category Select changes, rest Skill Select to appropriate values
+                skillSelect.length = 1;
+                for (var y in skillsObject[this.value]) {
+                    skillSelect.options[skillSelect.options.length] = new Option(skillsObject[this.value][y], y);
+                }
+            }
+        }
     </script>
-    
-    {% comment %} var subjectObject = {
-    "Front-end": {
-    "HTML": ["Links", "Images", "Tables", "Lists"],
-    "CSS": ["Borders", "Margins", "Backgrounds", "Float"],
-    "JavaScript": ["Variables", "Operators", "Functions", "Conditions"]
-    },
-    "Back-end": {
-    "PHP": ["Variables", "Strings", "Arrays"],
-    "SQL": ["SELECT", "UPDATE", "DELETE"]
-    }
-    } {% endcomment %}
-    
-    <!-- Embed skill data as JavaScript array -->
-    <!--
-    <script>
-    const skills = [
-    {% for skill in skills %}
-    {
-    name: "{{ skill.name|escapejs }}",
-    category: "{{ skill.category.name|escapejs }}"
-    }{% if not forloop.last %},{% endif %}
-    {% endfor %}
-    ];
-    
-    const categorySelect = document.getElementById('categorySelect');
-    const skillSelect = document.getElementById('skillSelect');
-    
-    categorySelect.addEventListener('change', function () {
-    const selectedCategory = this.value;
-    skillSelect.innerHTML = '<option value="">-- Select a Skill --</option>';
-    
-    const filteredSkills = skills.filter(s => s.category === selectedCategory);
-    filteredSkills.forEach(skill => {
-    const opt = document.createElement('option');
-    opt.value = skill.name;
-    opt.textContent = skill.name;
-    skillSelect.appendChild(opt);
-    });
-    });
-    </script>
-    -->
-</div>
+    <form name="form1" id="form1" action="/action_page.php">
+        Pick a skill: <select name="category" id="category">
+            <option value="" selected="selected">Select Category  </option>
+        </select>
+        <select name="skill" id="skill">
+            <option value="" selected="selected">Select Skill</option>
+        </select>
+        <br><br>
+        
+    </div>
